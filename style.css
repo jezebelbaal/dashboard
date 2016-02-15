@@ -1,0 +1,20 @@
+body {background-color: #f0f8ff;}
+
+.container {background-color: #ffffff; padding-left: 50px; padding-right: 50px;}
+
+.centertext {text-align: center}
+
+.featureitem h4:before {
+    content: "\e080";
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    position: relative;
+    margin-right: 10px;
+    top: 3px;
+    color: #ccc;
+
+}
+
+#initialheader{border-color: #000; border-style: solid; border-width: 1px;}
+
+.closetext {float: right;}
