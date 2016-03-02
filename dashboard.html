@@ -65,9 +65,30 @@
 				 	return null;
 				//if the file exists, parses it on the right sequence: filter; ui_category; feature.
 
+
 				return csvParsed;
 			}
 
+			//gets the retrieved data and filters according to given filters
+			function filterData(var parsedData, var filters){
+
+				var filteredData = [];
+
+				for (i = 0; i < parsedData.length; i++) { 
+					
+					//filters os
+					if(!filters['os']){
+						filteredData.push(parsedData[i]);
+						continue;
+					}else{
+						if(parsedData[i]['os'] == filters['os'])
+							filteredData.push(parsedData[i]);
+						else
+							continue;
+					}
+				}
+
+			}
 
 			/*this function gets the parsed values from the csv parser and will create tables and graphs,
 			embedding them to the body.*/
