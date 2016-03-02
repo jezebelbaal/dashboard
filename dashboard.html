@@ -19,15 +19,93 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-			$(".fancybox").fancybox();
 
+
+			//gets URL parameters
+			function getParameters(){
+				
+				url = window.location.href;
+				var parameters = [];
+				parameters['week'] = /week=([^&]+)/.exec(url)[1];
+				parameters['week2'] = /week2=([^&]+)/.exec(url)[1];
+				
+	    		parameters['version'] = /version=([^&]+)/.exec(url)[1];
+	    		parameters['channel'] = /channel=([^&]+)/.exec(url)[1];
+	    		
+	    		//version toggle will be true or false to later version comparision
+	    		parameters['version_toggle'] = /version_toggle=([^&]+)/.exec(url)[1];
+
+	    		//show only from a certain os
+	    		parameters['os'] = /os=([^&]+)/.exec(url)[1];
+
+	    		//if are set, will show only from determined filters or categories
+	    		parameters['filter'] = /filter=([^&]+)/.exec(url)[1];
+	    		parameters['uicategory'] = /uicategory=([^&]+)/.exec(url)[1];
+
+	    		//sortby parameters on GUI build
+	    		parameters['sortby'] = /orderby=([^&]+)/.exec(url)[1];
+	 
+	    		return parameters;
+			}
+
+
+			//this method populates an array with a given week 
+			function populateFeatures(){
+
+				var parameters = getParameters();
+				var docname = parameters['date'] + "_" + parameters['version'] + "_" + parameters['channel'] + ".csv";
+
+				//verifies if the file exists. if not, returns null for a error message print to GUI.
+
+				csvParsed = d3.csv(docname)
+				    .row(function(d) { return {key: d.key, value: +d.value}; })
+				    .get(function(error, rows) { console.log(rows); });
+
+				 if(!csvParsed)
+				 	return null;
+				//if the file exists, parses it on the right sequence: filter; ui_category; feature.
+
+				return csvParsed;
+			}
+
+
+			/*this function gets the parsed values from the csv parser and will create tables and graphs,
+			embedding them to the body.*/
+
+			function createGUI(var features){
+
+				document.write(features);
+			}
+
+			//this function initializes the dashboard.
+			function init(){
+
+				//getting the filters from the url parameters
+				var filters = getParameters();
+
+				//populates an array with all given values extracted from the csv
+				var features = populateFeatures(filters);
+
+				//build the GUI for the dashboard
+				createGUI(features);
+
+			}
+
+
+			//this function closes the initial panel data from general Telemetry
 			function closeFront(){
 				$("#initialheader").fadeOut(400);		
 			}
 
-			function changeOptions(){
-				if($("#initialheader").
+			
+			//loads fancybox
+			$(".fancybox").fancybox();
+			
+			//changes the MenuOptions state
+			function changeMenuTab(){
+
 			}
+
 		</script>
 
 		<div class="container containerwrap">
@@ -83,7 +161,10 @@
 
 								<!--Character Encoding Clicks !-->
 								<div id="characterencodingbtnclicks"class="featureitem">
-									<h4>characterencoding-btn <a href="#characterencodingbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
+									<h4>characterencoding-btn <a href="#characterencodingbtnclicksdesc" class="fancybox">
+										<small>learn more</small></a></h4>
+
+									<div id="visualization"></div>	
 									<!--description of the feature!-->
 									<div style="display: none">
 										<div id="characterencodingbtnclicksdesc">Some content here</div>
