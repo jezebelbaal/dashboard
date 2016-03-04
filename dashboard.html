@@ -7,6 +7,8 @@
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- D3 library -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
 		<!-- Latest compiled JavaScript -->
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<!-- Mobile-first -->
@@ -20,60 +22,66 @@
 	<body>
 		<script type="text/javascript">
 
+			var csvData = [];
 
 			//gets URL parameters
 			function getParameters(){
 				
 				url = window.location.href;
+
 				var parameters = [];
-				parameters['week'] = /week=([^&]+)/.exec(url)[1];
-				parameters['week2'] = /week2=([^&]+)/.exec(url)[1];
+
+				if(/week=([^&]+)/.exec(url))
+					parameters['week'] = /week=([^&]+)/.exec(url)[1];
+				if(/week2=([^&]+)/.exec(url))
+					parameters['week2'] = /week2=([^&]+)/.exec(url)[1];
 				
-	    		parameters['version'] = /version=([^&]+)/.exec(url)[1];
-	    		parameters['channel'] = /channel=([^&]+)/.exec(url)[1];
+				if(/version=([^&]+)/.exec(url))	
+	    			parameters['version'] = /version=([^&]+)/.exec(url)[1];
+	    		if(/channel=([^&]+)/.exec(url))
+	    			parameters['channel'] = /channel=([^&]+)/.exec(url)[1];
 	    		
 	    		//version toggle will be true or false to later version comparision
-	    		parameters['version_toggle'] = /version_toggle=([^&]+)/.exec(url)[1];
+	    		if(/version_toggle=([^&]+)/.exec(url))
+	    			parameters['version_toggle'] = /version_toggle=([^&]+)/.exec(url)[1];
 
 	    		//show only from a certain os
-	    		parameters['os'] = /os=([^&]+)/.exec(url)[1];
+	    		if(/os=([^&]+)/.exec(url))
+	    			parameters['os'] = /os=([^&]+)/.exec(url)[1];
 
 	    		//if are set, will show only from determined filters or categories
-	    		parameters['filter'] = /filter=([^&]+)/.exec(url)[1];
-	    		parameters['uicategory'] = /uicategory=([^&]+)/.exec(url)[1];
+	    		if(/filter=([^&]+)/.exec(url))
+	    			parameters['filter'] = /filter=([^&]+)/.exec(url)[1];
+	    		if(/uicategory=([^&]+)/.exec(url))
+	    			parameters['uicategory'] = /uicategory=([^&]+)/.exec(url)[1];
 
 	    		//sortby parameters on GUI build
-	    		parameters['sortby'] = /orderby=([^&]+)/.exec(url)[1];
+	    		if(/sortby=([^&]+)/.exec(url))
+	    			parameters['sortby'] = /sortby=([^&]+)/.exec(url)[1];
 	 
 	    		return parameters;
 			}
-
 
 			//this method populates an array with a given week 
 			function populateFeatures(){
 
 				var parameters = getParameters();
-				var docname = parameters['date'] + "_" + parameters['version'] + "_" + parameters['channel'] + ".csv";
 
-				//verifies if the file exists. if not, returns null for a error message print to GUI.
+				var docname = parameters['week'] + "_" + parameters['version'] + "_" + parameters['channel'] + ".csv";
 
-				csvParsed = d3.csv(docname)
-				    .row(function(d) { return {key: d.key, value: +d.value}; })
-				    .get(function(error, rows) { console.log(rows); });
+			   var myData = [];
 
-				 if(!csvParsed)
-				 	return null;
-				//if the file exists, parses it on the right sequence: filter; ui_category; feature.
+		    	var xmlhttp = null;
+			    xmlhttp = new XMLHttpRequest();
+			    xmlhttp.open( "GET", docname, false );
+			    xmlhttp.send( null );
+			    return d3.csv.parse(xmlhttp.responseText);
+			   
 
-
-				return csvParsed;
 			}
 
-			//gets the retrieved data and filters according to given filters
 			function filterData(var parsedData, var filters){
-
 				var filteredData = [];
-
 				for (i = 0; i < parsedData.length; i++) { 
 					
 					//filters os
@@ -87,31 +95,7 @@
 							continue;
 					}
 				}
-
 			}
-
-			/*this function gets the parsed values from the csv parser and will create tables and graphs,
-			embedding them to the body.*/
-
-			function createGUI(var features){
-
-				document.write(features);
-			}
-
-			//this function initializes the dashboard.
-			function init(){
-
-				//getting the filters from the url parameters
-				var filters = getParameters();
-
-				//populates an array with all given values extracted from the csv
-				var features = populateFeatures(filters);
-
-				//build the GUI for the dashboard
-				createGUI(features);
-
-			}
-
 
 			//this function closes the initial panel data from general Telemetry
 			function closeFront(){
@@ -126,6 +110,20 @@
 			function changeMenuTab(){
 
 			}
+
+			//this function initializes the dashboard.
+			function initDash(){
+
+				//populates an array with all given values extracted from the csv
+				var features = populateFeatures();
+				filteredFeatures = filter()
+				
+				//build the GUI for the dashboard
+				//createGUI(features);
+
+			}
+
+			initDash();
 
 		</script>
 
