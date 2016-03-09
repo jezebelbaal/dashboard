@@ -11,6 +11,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
 		<!-- Latest compiled JavaScript -->
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<!-- JavaScript Dash Functions -->
+		<script src="dash.js"></script>
 		<!-- Mobile-first -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--fancybox css!-->
@@ -19,114 +21,15 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 		<title>UI Telemetry</title>
 	</head>
-	<body>
+	<body onload="initDash();">
 		<script type="text/javascript">
-
-			var csvData = [];
-
-			//gets URL parameters
-			function getParameters(){
-				
-				url = window.location.href;
-
-				var parameters = [];
-
-				if(/week=([^&]+)/.exec(url))
-					parameters['week'] = /week=([^&]+)/.exec(url)[1];
-				if(/week2=([^&]+)/.exec(url))
-					parameters['week2'] = /week2=([^&]+)/.exec(url)[1];
-				
-				if(/version=([^&]+)/.exec(url))	
-	    			parameters['version'] = /version=([^&]+)/.exec(url)[1];
-	    		if(/channel=([^&]+)/.exec(url))
-	    			parameters['channel'] = /channel=([^&]+)/.exec(url)[1];
-	    		
-	    		//version toggle will be true or false to later version comparision
-	    		if(/version_toggle=([^&]+)/.exec(url))
-	    			parameters['version_toggle'] = /version_toggle=([^&]+)/.exec(url)[1];
-
-	    		//show only from a certain os
-	    		if(/os=([^&]+)/.exec(url))
-	    			parameters['os'] = /os=([^&]+)/.exec(url)[1];
-
-	    		//if are set, will show only from determined filters or categories
-	    		if(/filter=([^&]+)/.exec(url))
-	    			parameters['filter'] = /filter=([^&]+)/.exec(url)[1];
-	    		if(/uicategory=([^&]+)/.exec(url))
-	    			parameters['uicategory'] = /uicategory=([^&]+)/.exec(url)[1];
-
-	    		//sortby parameters on GUI build
-	    		if(/sortby=([^&]+)/.exec(url))
-	    			parameters['sortby'] = /sortby=([^&]+)/.exec(url)[1];
-	 
-	    		return parameters;
-			}
-
-			//this method populates an array with a given week 
-			function populateFeatures(){
-
-				var parameters = getParameters();
-
-				var docname = parameters['week'] + "_" + parameters['version'] + "_" + parameters['channel'] + ".csv";
-
-			   var myData = [];
-
-		    	var xmlhttp = null;
-			    xmlhttp = new XMLHttpRequest();
-			    xmlhttp.open( "GET", docname, false );
-			    xmlhttp.send( null );
-			    return d3.csv.parse(xmlhttp.responseText);
-			   
-
-			}
-
-			function filterData(var parsedData, var filters){
-				var filteredData = [];
-				for (i = 0; i < parsedData.length; i++) { 
-					
-					//filters os
-					if(!filters['os']){
-						filteredData.push(parsedData[i]);
-						continue;
-					}else{
-						if(parsedData[i]['os'] == filters['os'])
-							filteredData.push(parsedData[i]);
-						else
-							continue;
-					}
-				}
-			}
-
-			//this function closes the initial panel data from general Telemetry
-			function closeFront(){
-				$("#initialheader").fadeOut(400);		
-			}
-
-			
 			//loads fancybox
 			$(".fancybox").fancybox();
-			
-			//changes the MenuOptions state
-			function changeMenuTab(){
-
-			}
-
-			//this function initializes the dashboard.
-			function initDash(){
-
-				//populates an array with all given values extracted from the csv
-				var features = populateFeatures();
-				filteredFeatures = filter()
-				
-				//build the GUI for the dashboard
-				//createGUI(features);
-
-			}
-
-			initDash();
-
 		</script>
 
+		<div id="idteste">
+
+		</div>
 		<div class="container containerwrap">
 			
 			<div class="row centertext" id="headerrow"/>
@@ -173,11 +76,9 @@
 
 				<div id="contentpanel" class="col-sm-9">
 					<h3>clicks <a data-toggle="collapse" href="#clicksset">+</a> </h3>
-						<!--set of itens under clicksset category!-->
-
+						<!--#### set of itens under clicksset category ###!-->
 						<div id="clicksset" class="collapse">
-								<!--character encoding button items!-->
-
+							
 								<!--Character Encoding Clicks !-->
 								<div id="characterencodingbtnclicks"class="featureitem">
 									<h4>characterencoding-btn <a href="#characterencodingbtnclicksdesc" class="fancybox">
@@ -190,69 +91,7 @@
 									</div>
 								</div>
 
-								<!--Email Link Button Clicks !-->
-								<div id="emaillinkbtnclicks" class="featureitem">
-									<h4>emaillinkbtn <a href="#emaillinkbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="emaillinkbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
-
-								<!--Email Link Button Clicks !-->
-								<div id="emaillinkbtnclicks" class="featureitem">
-									<h4>emaillinkbtn <a href="#emaillinkbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="emaillinkbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
-
-								<!--Email Link Button Clicks !-->
-								<div id="emaillinkbtnclicks" class="featureitem">
-									<h4>emaillinkbtn <a href="#emaillinkbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="emaillinkbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
- 
-								<!--Email Link Button Clicks !-->
-								<div id="emaillinkbtnclicks" class="featureitem">
-									<h4>emaillinkbtn <a href="#emaillinkbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="emaillinkbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
-
-								<!--Email Link Button Clicks !-->
-								<div id="emaillinkbtnclicks" class="featureitem">
-									<h4>emaillinkbtn <a href="#emaillinkbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="emaillinkbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
-
-								<!--Email Link Button Clicks !-->
-								<div id="emaillinkbtnclicks" class="featureitem">
-									<h4>emaillinkbtn <a href="#emaillinkbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="emaillinkbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
-
-								<!--Email Link Button Clicks !-->
-								<div id="emaillinkbtnclicks" class="featureitem">
-									<h4>emaillinkbtn <a href="#emaillinkbtnclicksdesc" class="fancybox"><small>learn more</small></a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="emaillinkbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
-
+		
 						</div>
 
 
