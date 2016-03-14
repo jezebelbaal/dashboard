@@ -27,9 +27,6 @@
 			$(".fancybox").fancybox();
 		</script>
 
-		<div id="idteste">
-
-		</div>
 		<div class="container containerwrap">
 			
 			<div class="row centertext" id="headerrow"/>
@@ -52,71 +49,137 @@
 				<div class="col-sm-3">
 					<h3>Options</h3>
 
-					<div id="optionstabs">
-
-					</div>
-				</div>
-				<div class="col-sm-9">
-					<h3>Features</h3>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-3" id="optionsmenu">
-
-					<ul class="nav nav-pills">
-						<li id="optionsmenu" class="active"><a href="#">Options</a></li>
-  						<li id="featuresmenu"><a href="#">Features</a></li>
-  					</ul>
-
   					<div id="filterform">
-  						<form>
-  						</form>
+  						<form class="form" id='data-form'>
+						<fieldset>
+
+						<div class="form-group">
+						  <label class="form-label" for="for-timeframe" id="form-label-timeframe">Timeframe</label>
+						  <div class="btn-group-vertical" data-toggle="buttons" id="form-timeframe"> 
+						    <label class="btn btn-default" for="default">
+						      <input name="timeframe" id="timeframe-week" value="week" type="radio">
+						      Week
+						    </label> 
+						    <label class="btn btn-default" for="version">
+						      <input name="timeframe" id="timeframe-version" value="version" type="radio">
+						      Version
+						    </label> 
+						  </div>
+						</div>
+
+
+						<!-- Multiple Radios (inline) -->
+						<div class="form-group">
+						  <label class="form-label" for="type" id="form-label-type">Type</label>
+						  <div class="btn-group-vertical" data-toggle="buttons" id="form-type"> 
+						    <label class="btn btn-default show-week" for="cs-week">
+						      <input name="type" id="type-cs-week" value="cs-week" type="radio">
+						      Single Week
+						    </label> 
+						    <label class="btn btn-default show-version" for="cs-version">
+						      <input name="type" id="type-version" value="cs-version" type="radio">
+						      Single Version
+						    </label> 
+						    <label class="btn btn-default show-week" for="week-diff">
+						      <input name="type" id="type-week-diff" value="week-diff" type="radio">
+						      Week comparison
+						    </label>
+						    <label class="btn btn-default show-version" for="version-diff">
+						      <input name="type" id="type-version-diff" value="version-diff" type="radio">
+						      Version comparison
+						    </label>
+						  </div>
+						</div>
+
+						<!-- Select Basic -->
+						<div class="form-group">
+						  <label class="form-label" for="date" id="form-label-date">Week</label>
+						  <div>
+						    <select id="date" name="date" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+						    </select>
+						  </div>
+						</div>
+
+						<!-- Select Basic -->
+						<div class="form-group">
+						  <label class="form-label" for="base_date" id="form-label-base_date">Previous Week</label>
+						  <div>
+						    <select id="base_date" name="base_date" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+						    </select>
+						  </div>
+						</div>
+
+
+						<!-- Select Basic -->
+						<div class="form-group">
+						  <label class="form-label" for="version" id="form-label-version">Version</label>
+						  <div>
+						    <select id="version" name="version" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+						    </select>
+						  </div>
+						</div>
+
+						<!-- Select Basic -->
+						<div class="form-group">
+						  <label class="form-label" for="base_version" id="form-label-base_version">Previous Version</label>
+						  <div>
+						    <select id="base_version" name="base_version" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+						    </select>
+						  </div>
+						</div>
+
+
+						<!-- Multiple Radios (inline) -->
+						<div class="form-group">
+						  <label class="form-label" for="OS" id="form-label-os">OS</label>
+						  <div class="btn-group-vertical" data-toggle="buttons"> 
+						    <label class="btn btn-default" for="default">
+						      <input name="OS" id="os-default" value="default" type="radio">
+						      All
+						    </label> 
+						    <label class="btn btn-default" for="windows">
+						      <input name="OS" id="os-windows" value="windows" type="radio">
+						      Windows
+						    </label> 
+						    <label class="btn btn-default" for="mac">
+						      <input name="OS" id="os-mac" value="mac" type="radio">
+						      OSX
+						    </label> 
+						    <label class="btn btn-default" for="linux">
+						      <input name="OS" id="os-linux" value="linux" type="radio">
+						      Linux
+						    </label>
+						  </div>
+						<!-- Multiple Radios (inline) -->
+						<div class="form-group">
+						  <label class="form-label" for="channel" id="form-label-channel">Channel</label>
+						  <div class="btn-group-vertical" data-toggle="buttons"> 
+						    <label class="btn btn-default" for="release">
+						      <input name="channel" id="channel-release" value="release" type="radio">
+						      Release
+						    </label> 
+						    <label class="btn btn-default" for="beta">
+						      <input name="channel" id="channel-beta" value="beta" type="radio">
+						      Beta
+						    </label> 
+						    <label class="btn btn-default" for="aurora">
+						      <input name="channel" id="channel-aurora" value="aurora" type="radio">
+						      Aurora
+						    </label> 
+						    <label class="btn btn-default" for="nightly">
+						      <input name="channel" id="channel-nightly" value="nightly" type="radio">
+						      Nightly
+						    </label>
+						  </div>
+						<br/>
+						<button type="button" class="btn btn-success" onclick="submitForm()">Make it so!</button>
+						</fieldset>
+						</form>
   					</div>
 				</div>
 
 				<div id="contentpanel" class="col-sm-9">
-					<h3>clicks <a data-toggle="collapse" href="#clicksset">+</a> </h3>
-						<!--#### set of itens under clicksset category ###!-->
-						<div id="clicksset" class="collapse">
-							
-								<!--Character Encoding Clicks !-->
-								<div id="characterencodingbtnclicks"class="featureitem">
-									<h4>characterencoding-btn <a href="#characterencodingbtnclicksdesc" class="fancybox">
-										<small>learn more</small></a></h4>
-
-									<div id="visualization"></div>	
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="characterencodingbtnclicksdesc">Some content here</div>
-									</div>
-								</div>
-
-		
-						</div>
-
-
-					<h3>customizations <a data-toggle="collapse" href="#customizationsset">+</a> </h3>
-						<!--set of itens under customizations category!-->
-
-						<div id="customizationsset" class="collapse">
-								<!--character encoding button items!-->
-								<div id="characterencodingbtn" class="featureitem">
-									<h4>characterencoding-btn <a href="#featurename" class="fancybox">+</a></h4>
-									<!--description of the feature!-->
-									<div style="display: none">
-										<div id="featurename">Some content here</div>
-									</div>
-								</div>
-						</div>
-					<h3>screen sizes <a class="fancybox" href="">+</a> </h3>
 					
-
-					<h3>stats <a class="fancybox" href="">+</a> </h3>
-					
-					<h3>toolbars <a class="fancybox" href="">+</a> </h3>
-					
-
-					<h3>unspecified <a class="fancybox" href="">+</a> </h3>
 				</div>
 					
 			</div>

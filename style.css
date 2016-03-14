@@ -18,3 +18,31 @@ body {background-color: #f0f8ff;}
 #initialheader{border-color: #000; border-style: solid; border-width: 1px;}
 
 .closetext {float: right;}
+
+.clickstrong {background-color: #ff4d4d}
+.clicksmedium {background-color: #ff8080}
+.clicklow {background-color: #ffe6e6 }
+.clickverylow {background-color: #ffffff}
+
+.customizationsstrong {background-color: #8080ff}
+.customizationsmedium {background-color: #b3b3ff}
+.customizationslow {background-color: #e6e6ff}
+.customizationsverylow {background-color: #ffffff }
+
+.undefinedstrong {background-color: #39ac39}
+.undefinedmedium {background-color: #66cc66}
+.undefinedlow {background-color: #c6ecc6}
+.undefinedverylow {background-color: #ffffff}
+
+.tabs-and-toolsstrong{background-color:  #ffff33}
+.tabs-and-toolsmedium{background-color: #ffff80}
+.tabs-and-toolslow{background-color: #ffffcc }
+.tabs-and-toolsverylow{background-color: #ffffff}
+
+.form-label{display: block}
+
+.form-group{margin-top: 10px;}
+.btn {margin-top: 10px;}
+
+
+

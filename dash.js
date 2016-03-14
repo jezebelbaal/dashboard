@@ -149,28 +149,25 @@ function organizeObjectsByAttribute(featuresList){
 	
 
 	for(i= 0;i<featuresList.length;i++){
-		
-		console.log('uicategory:' + featuresList[i].uicategory + ' filter:' + featuresList[i].filter);
 
 		//adds the attribute to the list if not listed.
 		
-		/*if(!attrList[featuresList[i].uicategory]){
+		if(attrList[featuresList[i].uicategory] == undefined){
 
 			attrList[featuresList[i].uicategory] = [];
-
-			attrList[featuresList[i].uicategory[featuresList[i].filter]] = [];
-			attrList[featuresList[i].uicategory[featuresList[i].filter]].push(featuresList[i]);
+			attrList[featuresList[i].uicategory][featuresList[i].filter] = [];
 
 		}else{
 
-			//if(!attrList[featuresList[i].uicategory][featuresList[i].uicategory])
-		}*/
-		//attrList[featuresList[i].uicategory[featuresList[i].filter]].push(featuresList[i]);	
+			if(!attrList[featuresList[i].uicategory][featuresList[i].filter]){
+				attrList[featuresList[i].uicategory][featuresList[i].filter] = [];
+			}
 
+			attrList[featuresList[i].uicategory][featuresList[i].filter].push(featuresList[i]);
+		}
 	}
-
-	console.log(attrList['clicks']['additional']);
-}
+	return attrList;	
+}	
 
 //this function closes the initial panel data from general Telemetry
 function closeFront(){
@@ -180,34 +177,44 @@ function closeFront(){
 //this function builds the GUI
 function makeGUI (features){
 
-	featureHTML = document.getElementById("clicksset").innerHTML;
+	var featureHTML = "";
 
+	for(uicategory in features){
 
-	for(i=0;i<features.length;i++){
+		featureHTML += '<h3>' + uicategory +  '<a data-toggle="collapse" href="#' + uicategory + 'set">+</a> </h3>';
+		featureHTML+='<div id="' + uicategory + 'set" class="collapse">';
 
-		featureHTML = '<div id="' + features[i].feature + features[i].uicategory + '"class="featureitem">'+
-			'<h4>' + features[i].feature + ' <a href="#' + 
-			features[i].feature + features[i].uicategory + 'desc " class="fancybox">'+
-				'<small>learn more</small></a></h4>'+
+		for(filter in features[uicategory]){
 
-			'<div id="visualization"></div>'+
-			'<!--description of the feature!-->'+
-			'<div style="display: none">'+
-			'<div id="'+ features[i].feature + features[i].uicategory + 'desc">Some content here</div>'+
-			'</div>'+
-		'</div>';
-		document.getElementById("clicksset").innerHTML = document.getElementById("clicksset").innerHTML + featureHTML;
+				featureHTML +='<h4><a data-toggle="collapse" href="#' + 
+				filter + uicategory + 'set">' + filter + '</a></h4>'
+				
+				featureHTML +='<div id="' + filter +  uicategory +'set" class="collapse">'
+				for(i=0; i<features[uicategory][filter].length; i++){
 
+					featureHTML += '<div id="' + features[uicategory][filter][i].feature + 
+					features[uicategory][filter][i].uicategory + '"class="featureitem">'+
+					'<h4>' + features[uicategory][filter][i].feature + ' <a href="#' + 
+					features[uicategory][filter][i].feature + features[uicategory][filter][i].uicategory + 'desc " class="fancybox">'+
+						'<small>learn more</small></a></h4>'+
+					'<div id="visualization"></div>'+
+					'<!--description of the feature!-->'+
+					'<div style="display: none">'+
+					'<div id="'+ features[uicategory][filter][i].feature + features[uicategory][filter][i].uicategory + 'desc">Test</div>'+
+					'</div>'+
+					'</div>';
+				}
+
+				featureHTML +='</div>';
+			}
+
+		featureHTML+='</div>';
+
+		}
+		document.getElementById("contentpanel").innerHTML += featureHTML;
 	}
 
-
-}
-
-//changes the MenuOptions state
-function changeMenuTab(){
-
-}
-
+	
 //this function initializes the dashboard.
 function initDash(){
 
@@ -221,10 +228,10 @@ function initDash(){
 	//filters and build the GUI
 	filteredFeatures = filterData(features, parameters);
 
-	organizeObjectsByAttribute(filteredFeatures);
+	organizedFeatures = organizeObjectsByAttribute(filteredFeatures);
 
 	//build the GUI for the dashboard
-	makeGUI(filteredFeatures);
+	makeGUI(organizedFeatures);
 
 
 
